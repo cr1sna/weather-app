@@ -14,10 +14,13 @@ const weather = (longitude, latitude, callback) => {
     } else if (response.body.error) {
       callback("unable to find location", undefined);
     } else {
-      console.log(
-        "The weather is for",
-        response.body.currently.summary + " and the temperature is:",
-        response.body.currently.temperature + " degree celsius"
+      callback(
+        undefined,
+        "The weather is " +
+          response.body.currently.summary +
+          "  and the temperature is:" +
+          response.body.currently.temperature +
+          " degree celsius"
       );
     }
   });

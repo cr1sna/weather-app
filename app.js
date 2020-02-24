@@ -1,12 +1,25 @@
 const request = require("request");
 const geocode = require("./routes/geocode.js");
-const weather = require("./routes/weather_forcast.js");
+const weather = require("./routes/weather_forecast.js");
 
-weather(85.36667, 27.71667, (error, data) => {
-  console.log("hello world!");
-});
+const address = process.argv[2];
 
-geocode("kathmandu", (error, data) => {
-  console.log("error", error);
-  console.log("Data", data);
-});
+if (!address) {
+  console.log("Please provide the address");
+} else {
+  geocode(address, (error, data) => {
+    if (error) {
+      console.log("error", error);
+    } else {
+      console.log("Data", data);
+    }
+
+    weather(data.longitude, data.latitude, (error, data) => {
+      if (error) {
+        console.log("error:", error);
+      } else {
+        console.log("Infromation :", data);
+      }
+    });
+  });
+}
